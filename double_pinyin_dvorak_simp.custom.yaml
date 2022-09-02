@@ -1,0 +1,4 @@
+patch:
+  __include: emoji_suggestion:/patch
+  __merge:
+    __include: easy_en_suggestion:/patch

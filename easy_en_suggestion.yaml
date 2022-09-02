@@ -1,0 +1,17 @@
+# encoding: utf-8
+
+patch:
+  # 加載 easy_en 依賴
+  "schema/dependencies/@next": easy_en
+  # 載入翻譯英文的碼表翻譯器，取名爲 english
+  "engine/translators/@next": table_translator@english
+  # english 翻譯器的設定項
+  english:
+    dictionary: easy_en
+    spelling_hints: 9
+    enable_completion: true
+    enable_sentence: false
+    initial_quality: -1
+  recognizer/patterns/uppercase: ""
+  speller/alphabet:
+    __include: easy_en.schema:/speller/alphabet
