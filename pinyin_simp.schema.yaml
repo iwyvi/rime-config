@@ -53,7 +53,7 @@ engine:
   translators:           # ※ 默认组件：翻譯特定類型的編碼段爲一組候選文字
     - punct_translator   # ※ 轉換標點符號
     - script_translator  # ※ 腳本翻譯器，用於拼音等基於音節表的輸入方案
-    - table_translator@custom_phrase  # 自定义文本
+    - table_translator  # 自定义文本
     - table_translator@easy_en        # 英文输入
     - lua_translator@date_translator  # 时间、日期、星期
   filters: # ※ 默认组件：過濾翻譯的結果

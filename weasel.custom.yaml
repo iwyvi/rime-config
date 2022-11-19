@@ -1,0 +1,23 @@
+customization:
+  distribution_code_name: Weasel
+  distribution_version: 0.14.3
+  generator: "Weasel::UIStyleSettings"
+  modified_time: "Wed Nov 11 23:29:03 2020"
+  rime_version: 1.5.3
+patch:
+  "style/candidate_format": " %c. %@  "
+  "style/color_scheme": psionics
+  "style/font_point": 15
+  "style/horizontal": true
+  "style/label_font_point": 8 # 小狼毫无用
+  "style/label_format": "%s."
+  "style/inline_preedit": true
+  "style/layout/border_width": 0
+  "style/layout/border": 0
+  "style/layout/margin_x": 12 #候选字左右边距
+  "style/layout/margin_y": 12 #候选字上下边距
+  "style/layout/hilite_padding": 12 #候选字背景色色块高度 若想候选字背景色块无边界填充候选框，仅需其高度和候选字上下边距一致即可
+  "style/layout/hilite_spacing": 8 # 序号和候选字之间的间隔
+  "style/layout/spacing": 10 #不知道干嘛的，在weasel下好像没有效果
+  "style/layout/candidate_spacing": 24 # 候选字间隔
+  "style/layout/round_corner": 0 #候选字背景色块圆角幅度

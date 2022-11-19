@@ -43,7 +43,7 @@ engine:
   translators:
     - punct_translator
     - script_translator  # ※ 腳本翻譯器，用於拼音等基於音節表的輸入方案
-    - table_translator@custom_phrase  # 自定义文本
+    - table_translator  # 自定义文本
     - lua_translator@date_translator  # 时间、日期、星期
   filters:
     - simplifier@traditionalize  # 简繁切换
