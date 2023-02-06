@@ -15,10 +15,6 @@
           {
             "type": "text",
             "file": "emoji_word.txt"
-          },
-          {
-            "type": "text",
-            "file": "emoji_word_1.txt"
           }
         ]
       }
