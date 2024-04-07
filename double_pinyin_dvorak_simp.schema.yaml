@@ -28,6 +28,7 @@ engine:
   processors:
     - ascii_composer
     - recognizer
+    - lua_processor@select_character # lua 选词扩展，如需关闭请注释
     - key_binder
     - speller
     - punctuator
@@ -42,9 +43,9 @@ engine:
     - fallback_segmentor
   translators:
     - punct_translator
+    - lua_translator@date_translator  # 时间、日期、星期
     - script_translator  # ※ 腳本翻譯器，用於拼音等基於音節表的輸入方案
     - table_translator  # 自定义文本
-    - lua_translator@date_translator  # 时间、日期、星期
   filters:
     - simplifier@traditionalize  # 简繁切换
     - uniquifier                 # 去重
