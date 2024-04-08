@@ -12,12 +12,117 @@ patch:
   # style/font_face: "苹方" # 我喜歡的字體名稱
   style/font_point: 18 # 字號
   style/label_font_point: 14
-  style/corner_radius: 5 # 窗口圓角半徑
-  style/border_height: 7 # 窗口邊界高度，大於圓角半徑才有效果
-  style/border_width: 5 # 窗口邊界寬度，大於圓角半徑才有效果ce oi
-  style/color_scheme: psionics # 選擇配色方案
+  # style/corner_radius: 5 # 窗口圓角半徑
+  # style/border_height: 7 # 窗口邊界高度，大於圓角半徑才有效果
+  # style/border_width: 5 # 窗口邊界寬度，大於圓角半徑才有效果
+  style/color_scheme: chinolor_light # 選擇配色方案
+  style/color_scheme_dark: chinolor
   # https://github.com/rime/squirrel/blob/master/data/squirrel.yaml#L106
   app_options:
     dev.warp.Warp-Stable:
       ascii_mode: true
       no_inline: true
+  preset_color_schemes:
+    chinolor:
+      name: "Chinolor"
+      author: "iwyvi"
+      font_face: "PingFangSC"
+      font_point: 18
+      label_font_face: "PingFangSC"
+      label_font_point: 14
+      candidate_format: "\u2005%c.\u2005%@\u2005\u2005"
+      candidate_list_layout: linear
+      text_orientation: horizontal
+      inline_preedit: true
+
+      corner_radius: 7
+      hilited_corner_radius: 6
+      border_height: 1
+      border_width: 1
+      shadow_size: 2
+
+      color_space: display_p3
+      back_color: 0x2C312B
+      border_color: 0x727161
+      candidate_text_color: 0xD7DFE4
+      comment_text_color: 0xACB5BB
+      label_color: 0xACB5BB
+      hilited_candidate_back_color: 0xD1BC8A
+      hilited_candidate_text_color: 0x1E241A
+      hilited_comment_text_color: 0x4C4B47
+      hilited_candidate_label_color: 0x4C4B47
+      text_color: 0xD7DFE4
+      # hilited_text_color: 0xD8000000
+    chinolor_light:
+      name: "Chinolor Light"
+      author: "iwyvi"
+      font_face: "PingFangSC"
+      font_point: 18
+      label_font_face: "PingFangSC"
+      label_font_point: 14
+      candidate_format: "\u2005%c.\u2005%@\u2005\u2005"
+      candidate_list_layout: linear
+      text_orientation: horizontal
+      inline_preedit: true
+
+      corner_radius: 7
+      hilited_corner_radius: 6
+      border_height: 1
+      border_width: 1
+      shadow_size: 2
+
+      color_space: display_p3
+      back_color: 0xEDF4F8
+      border_color: 0xA7ACA4
+      candidate_text_color: 0x2C312B
+      comment_text_color: 0x57655D
+      label_color: 0x57655D
+      hilited_candidate_back_color: 0xB58117
+      hilited_candidate_text_color: 0xEDF4F8
+      hilited_comment_text_color: 0xD7DFE4
+      hilited_candidate_label_color: 0xD7DFE4
+      text_color: 0x2C312B
+      # hilited_text_color: 0xD8000000
+
+# 各个设置项的简要作用说明
+# 以下出现的颜色均为 16 进制色值，(A)BGR顺序
+## alpha: 透明度
+## back_color: 候选条背景色
+## base_offset: 候选框与输入框的垂直偏移量
+## border_color: 边框颜色
+## border_color_width: 输入条边框宽度
+## border_height: 窗口上下高度
+## border_width: 窗口左右宽度
+## candidate_format: 候选格式
+## candidate_spacing: 候选字间隔
+## candidate_text_color: 预选项文字颜色
+## color_space: 颜色空间
+## comment_font_face: 拼音等提示文字字体
+## comment_font_point: 拼音等提示文字字号
+## comment_text_color: 拼音等提示文字颜色
+## corner_radius: 候选条圆角
+## font_face: 候选词字体
+## font_point: 候选字词大小
+## hilite_padding: 候选字背景色色块高度
+## hilited_back_color: 第一候选项背景背景色
+## hilited_candidate_back_color: 候选文字背景色
+## hilited_candidate_label_color: 第一候选项编号颜色
+## hilited_candidate_text_color: 第一候选项文字颜色
+## hilited_comment_text_color: 注解文字高亮颜色
+## hilited_corner_radius: 高亮圆角
+## hilited_label_color: 已选字的数字颜色
+## hilited_text_color: 高亮拼音颜色
+## horizontal: 是否水平排列（鼠须管 0.15 以后已弃用）
+## inline_preedit: 是否单行显示
+## label_color: 预选栏编号颜色
+## label_font_face: 候选词编号字体
+## label_font_point: 候选编号大小
+## label_format: 候选编号格式
+## line_spacing: 行间距
+## margin_x: 字左右边距
+## margin_y: 字上下边距
+## min_height: 最小高度
+## min_width: 最小宽度
+## round_corner: 候选字背景色块圆角幅度
+## spacing: 间距
+## text_color: 高亮选中词颜色
