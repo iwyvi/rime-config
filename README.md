@@ -10,5 +10,5 @@
 
 ## 参考
 
-- https://github.com/iDvel/rime-settings
-- https://github.com/LufsX/rime/blob/master/rime.lua
+- https://github.com/iDvel/rime-ice
+- https://github.com/LufsX/rime
