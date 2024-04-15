@@ -19,8 +19,6 @@ patch:
     Shift_L: commit_code
 
   schema_list:
-    # - schema: luna_pinyin_simp # 朙月拼音·简化字，可以按 ctrl+` 选择临时启用正體中文
-    # - schema: double_pinyin_dvorak
     - schema: pinyin_simp
     - schema: double_pinyin_dvorak_simp
 
