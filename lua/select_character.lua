@@ -8,8 +8,8 @@ local select = {}
 
 function select.init(env)
     local config = env.engine.schema.config
-    select.first_key = config:get_string('key_binder/select_first_character') or 'bracketleft'
-    select.last_key = config:get_string('key_binder/select_last_character') or 'bracketright'
+    select.first_key = config:get_string('key_binder/select_first_character')
+    select.last_key = config:get_string('key_binder/select_last_character')
 end
 
 function select.func(key, env)

@@ -1,11 +1,10 @@
 # Rime dictionary
 # encoding: utf-8
+# 内容同 rime_icp.dict.yaml，为保证之前用户词库可用，暂不改名
 
 ---
 name: pinyin_simp
-version: "1"
-sort: by_weight
-vocabulary: essay-zh-hans
+version: "2023-11-13"
 
 import_tables:
   - cn_dicts/8105     # 字表

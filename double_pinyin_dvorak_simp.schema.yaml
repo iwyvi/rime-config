@@ -4,31 +4,37 @@
 schema:
   schema_id: double_pinyin_dvorak_simp
   name: Dvorak双拼（简化字）
-  version: "0.1"
+  version: "0.2"
   author:
     - IwYvI <iwyvi@outlook.com>
   description: |
-    袖珍简化字拼音＋自定义 dvorak 双拼。
+    雾凇拼音 ＋ 自定义 dvorak 双拼。
+  dependencies:
+    - melt_eng        # 英文输入，作为次翻译器挂载到拼音方案
 
+# 开关
+# reset: 默认状态。注释掉后，切换窗口时不会重置到默认状态。
+# states: 方案选单显示的名称。可以注释掉，仍可以通过快捷键切换。
+# abbrev: 默认的缩写取 states 的第一个字符，abbrev 可自定义一个字符
 switches:
   - name: ascii_mode
-    reset: 0
-    states: [" 中 ", " Ａ "]
-  - name: full_shape
-    reset: 0
-    # states: [半角, 全角]
-  - name: ascii_punct
-    reset: 0
-    # states: [。，, ．，]
+    states: [ 中, Ａ ]
+  - name: ascii_punct  # 中英标点
+    states: [ ¥, $ ]
   - name: traditionalization
-    reset: 0  # 如果不想每次切换 App 都自动变成简体，可以注释这里
     states: [ 简, 繁 ]
+  - name: emoji
+    states: [ 💀, 😄 ]
+    reset: 1
+  - name: full_shape
+    states: [ 半角, 全角 ]
 
+# 输入引擎
 engine:
   processors:
+    - lua_processor@select_character          # 以词定字
     - ascii_composer
     - recognizer
-    - lua_processor@select_character # lua 选词扩展，如需关闭请注释
     - key_binder
     - speller
     - punctuator
@@ -43,15 +49,84 @@ engine:
     - fallback_segmentor
   translators:
     - punct_translator
-    - lua_translator@date_translator  # 时间、日期、星期
-    - script_translator  # ※ 腳本翻譯器，用於拼音等基於音節表的輸入方案
-    - table_translator  # 自定义文本
+    - script_translator
+    - lua_translator@date_translator    # 时间、日期、星期
+    - lua_translator@lunar              # 农历
+    - table_translator@melt_eng         # 英文输入
+    - lua_translator@unicode            # Unicode
+    - lua_translator@number_translator  # 数字、金额大写
+    - lua_translator@force_gc           # 暴力 GC
   filters:
-    - simplifier@traditionalize  # 简繁切换
-    - uniquifier                 # 去重
+    - lua_filter@corrector                          # 错音错字提示
+    - lua_filter@autocap_filter                     # 英文自动大写
+    - lua_filter@pin_cand_filter                    # 置顶候选项（顺序要求：置顶候选项 > Emoji > 简繁切换）
+    - simplifier@emoji                              # Emoji
+    - simplifier@traditionalize                     # 简繁切换
+    - lua_filter@reduce_english_filter              # 降低部分英语单词在候选项的位置
+    - uniquifier                                    # 去重
+
+# Lua 配置: 日期、时间、星期、ISO 8601、时间戳的触发关键字
+date_translator:
+  date: date            # 日期： 2022-11-29
+  time: time            # 时间： 18:13
+  week: week            # 星期： 星期二
+  timestamp: timestamp  # 时间戳： 1669716794
+
+# Lua 配置：农历的触发关键字
+lunar: lunar  # 农历： 二〇二三年冬月二十 癸卯年（兔）冬月二十
+
+
+# Lua 配置：为 corrector 格式化 comment，占位符为 {comment}
+# 默认 "{comment}" 输入 hun dun 时会在「馄饨」旁边生成 hún tun 的 comment
+# 例如左右加个括号 "({comment})" 就会变成 (hún tun)
+corrector: "{comment}"
+
+# Lua 配置: 降低部分英语单词在候选项的位置。
+# 详细介绍 https://dvel.me/posts/make-rime-en-better/#短单词置顶的问题
+# 正常情况： 输入 rug 得到 「1.rug 2.如果 …… 」
+# 降低之后： 输入 rug 得到 「1.如果 2.rug …… 」
+# 几种模式：
+# all     降低脚本内置的单词（所有 3~4 位长度、前 2~3 位是完整拼音、最后一位是声母），words 作为自定义的额外补充
+# custom  完全自定义，只降低 words 里的
+# none    不降低任何单词，相当于没有启用这个 Lua
+# （匹配的是编码，不是单词）
+reduce_english_filter:
+  mode: custom  # all | custom | none
+  idx: 2        # 降低到第 idx 个位置
+  # 自定义的单词列表，示例列表没有降低部分常用单词，如 and cat mail Mac but bad shit ……
+  words: [
+    aid, ann,
+    bail, bait, bam, band, bans, bat, bay, bend, bent, benz, bib, bid, bien, biz, boc, bop, bos, bud, buf, bach, bench, bush,
+    cab, cad, cain, cam, cans, cap, cas, cef, chad, chan, chap, chef, cher, chew, chic, chin, chip, chit, coup, cum, cunt, cur, couch,
+    dab, dag, dal, dam, dent, dew, dial, diet, dim, din, dip, dis, dit, doug, dub, dug, dunn,
+    fab, fax, fob, fog, foul, fur,
+    gag, gail, gain, gal, gam, gaol, ged, gel, ger, guam, gus, gut,
+    hail, ham, hank, hans, hat, hay, heil, heir, hem, hep, hud, hum, hung, hunk, hut, hush,
+    jim, jug,
+    kat,
+    lab, lad, lag, laid, lam, laos, lap, lat, lax, lay, led, leg, lex, liam, lib, lid, lied, lien, lies, linn, lip, lit, liz, lob, lug, lund, lung, lux, lash, loch, lush,
+    mag, maid, mann, mar, mat, med, mel, mend, mens, ment, mil, mins, mint, mob, moc, mop, mos, mot, mud, mug, mum, mesh,
+    nap, nat, nay, neil, nib, nip, noun, nous, nun, nut, nail, nash,
+    pac, paid, pail, pain, pair, pak, pal, pam, pans, pant, pap, par, pat, paw, pax, pens, pic, pier, pies, pins, pint, pit, pix, pod, pop, pos, pot, pour, pow, pub, pinch, pouch,
+    rand, rant, rent, rep, res, ret, rex, rib, rid, rig, rim, rub, rug, rum, runc, runs, ranch,
+    sac, sail, sal, sam, sans, sap, saw, sax, sew, sham, shaw, shin, sig, sin, sip, sis, suit, sung, suns, sup, sur, sus,
+    tad, tail, taj, tar, tax, tec, ted, tel, ter, tex, tic, tied, tier, ties, tim, tin, tit, tour, tout, tum,
+    wag, wand, womens, wap, wax, weir, won,
+    yan, yen,
+    zach
+  ]
+
+
+# Lua 配置: 置顶候选项
+# 注释太长了，请参考 pin_cand_filter.lua 开头的说明书。
+pin_cand_filter:
+  # 格式：编码<Tab>字词1<Space>字词2……
+  - d	的
 
 speller:
-  alphabet: zyxwvutsrqponmlkjihgfedcba  # 默认
+  alphabet: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA  # 默认
+  # initials 定义仅作为始码的按键，排除 ` 让单个的 ` 可以直接上屏
+  initials: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA
   delimiter: " '"  # 隔音符號用「'」；第一位的空白用來自動插入到音節邊界處
   algebra:  # 拼寫運算規則，這個纔是實現雙拼方案的重點。寫法有很多種，當然也可以把四百多個音節碼一條一條地列舉
     - erase/^zz$/             # 碼表中有幾個拼音不明的字，編碼成xx了，消滅他
@@ -72,7 +147,7 @@ speller:
     - xform/[iu]a$/F/
     - xform/en$/N/
     - xform/eng$/R/
-    - xform/ang$/p/           # 檢查一下在此之前是否已轉換過了帶界音的ang；好，※1處有了
+    - xform/ang$/P/           # 檢查一下在此之前是否已轉換過了帶界音的ang；好，※1處有了
     - xform/an$/S/            # 如果※2、※3還無有出現在上文中，應該把他們提到本行之前
     - xform/iao$/Q/           # 對——像這樣讓iao提前出場
     - xform/ao$/C/
@@ -89,6 +164,9 @@ speller:
 translator:
   dictionary: pinyin_simp     # 與【朙月拼音】共用詞典
   prism: double_pinyin_dvorak_simp    # prism 要以本輸入方案的名稱來命名，以免把朙月拼音的拼寫映射表覆蓋掉
+  spelling_hints: 8             # corrector.lua ：为了让错音错字提示的 Lua 同时适配全拼双拼，将拼音显示在 comment 中
+  always_show_comments: true    # corrector.lua ：Rime 默认在 preedit 等于 comment 时取消显示 comment，这里强制一直显示，供 corrector.lua 做判断用。
+  initial_quality: 1.2          # 拼音的权重应该比英文大
   preedit_format:             # 這段代碼用來將輸入的雙拼碼反轉爲全拼顯示；待見雙拼碼的可以把這段拿掉
     # - xform/u(\w)/0$1/        # 零聲母先改爲0，以方便後面的轉換
     # - xform/(\w)y/$1ei/       # 雙拼第二碼轉換爲韻母
@@ -126,21 +204,54 @@ translator:
     # - "xform/(^|[ '])o/$1sh/"
     # - xform/0(\w)/$1/          # 好了，現在可以把零聲母拿掉啦
 
-punctuator:
-  import_preset: default
+# 次翻译器，英文
+melt_eng:
+  dictionary: melt_eng     # 挂载词库 melt_eng.dict.yaml
+  enable_sentence: false   # 禁止造句
+  enable_user_dict: false  # 禁用用户词典
+  initial_quality: 1.1     # 初始权重
+  comment_format:          # 自定义提示码
+    - xform/.*//           # 清空提示码
 
-key_binder:
-  import_preset: default
+# Emoji
+emoji:
+  option_name: emoji
+  opencc_config: emoji.json
+  inherit_comment: false  # 在 corrector.lua 及反查中，emoji 返回空注释
 
 # 简繁切换
 traditionalize:
-  opencc_config: s2t.json  # 其他选项（如台湾繁体、香港繁体）参考：https://github.com/BYVoid/OpenCC#configurations-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6
   option_name: traditionalization
-  tips: all  # 简繁提示，注释掉可直接出繁
+  opencc_config: s2t.json  # s2t.json | s2hk.json | s2tw.json | s2twp.json
+  tips: none               # 转换提示: all 都显示 | char 仅单字显示 | none 不显示。
+  tags: [ abc, number, gregorian_to_lunar ]  # 限制在对应 tag，不对其他如反查的内容做简繁转换
 
-# 八股文语言模型
-grammar:
-  language: zh-hans-t-essay-bgw
-translator/contextual_suggestions: true
-translator/max_homophones: 7
-translator/max_homographs: 7
+# 标点符号
+# punctuator 下面有三个子项：
+#   full_shape 全角标点映射
+#   half_shape 半角标点映射
+#   symbols    Rime 的预设配置是以 '/' 前缀开头输出一系列字符，自定义的 symbols_caps_v.yaml 修改成了 'V' 开头。
+punctuator:
+  full_shape:
+    __include: default:/punctuator/full_shape  # 从 default.yaml 导入配置
+  half_shape:
+    __include: default:/punctuator/full_shape  # 从 default.yaml 导入配置
+  symbols:
+    __include: symbols_caps_v:/symbols         # 从 symbols_caps_v.yaml 导入配置
+
+# 处理符合特定规则的输入码，如网址、反查
+
+recognizer:
+  import_preset: default  # 从 default.yaml 继承通用的
+  patterns:  # 再增加方案专有的：
+    punct: "^V([0-9]|10|[A-Za-z]+)$"    # 响应 symbols_caps_v.yaml 的 symbols
+    unicode: "^U[a-f0-9]+"              # 脚本将自动获取第 2 个字符 U 作为触发前缀，响应 lua_translator@unicode，输出 Unicode 字符
+    number: "^R[0-9]+[.]?[0-9]*"        # 脚本将自动获取第 2 个字符 R 作为触发前缀，响应 lua_translator@number_translator，数字金额大写
+    gregorian_to_lunar: "^N[0-9]{1,8}"  # 脚本将自动获取第 2 个字符 N 作为触发前缀，响应 lua_translator@lunar，公历转农历，输入 N20240115 得到「二〇二三年腊月初五」
+
+
+# 从 default 继承快捷键
+key_binder:
+  import_preset: default  # 从 default.yaml 继承通用的
+  search: "`"             # 辅码引导符，要添加到 speller/alphabet
+  # bindings:             # 也可以再增加方案专有的
