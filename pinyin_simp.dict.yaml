@@ -1,21 +1,16 @@
 # Rime dictionary
 # encoding: utf-8
+# 内容同 rime_icp.dict.yaml，为保证之前用户词库可用，暂不改名
 
 ---
 name: pinyin_simp
-version: "1"
-sort: by_weight
-vocabulary: essay-zh-hans
+version: "2023-11-13"
 
 import_tables:
-  # ----------------------- 字表 ----------------------- #
-  - cn_dicts/8105    # 《通用汉字规范表》8105 字字表
-
-
-  # --------------------- 系统词库 --------------------- #
-  - cn_dicts/sys     # 华宇野风系统词库 + 清华大学开源词库 + 修订
-
-
-  # ---------------------- 扩展 ----------------------- #
-  - cn_dicts/sys_ext # 扩展词库
+  - cn_dicts/8105     # 字表
+  # - cn_dicts/41448  # 大字表（按需启用）
+  - cn_dicts/base     # 基础词库
+  - cn_dicts/ext      # 扩展词库
+  - cn_dicts/tencent  # 腾讯词向量（大词库，部署时间较长）
+  - cn_dicts/others   # 一些杂项
 ...
