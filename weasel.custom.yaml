@@ -14,9 +14,9 @@ patch:
   "style/inline_preedit": true
   "style/layout/border_width": 0
   "style/layout/border": 0
-  "style/layout/margin_x": 12 #候选字左右边距
-  "style/layout/margin_y": 12 #候选字上下边距
-  "style/layout/hilite_padding": 12 #候选字背景色色块高度 若想候选字背景色块无边界填充候选框，仅需其高度和候选字上下边距一致即可
+  "style/layout/margin_x": 8 #候选字左右边距
+  "style/layout/margin_y": 8 #候选字上下边距
+  "style/layout/hilite_padding": 8 #候选字背景色色块高度 若想候选字背景色块无边界填充候选框，仅需其高度和候选字上下边距一致即可
   "style/layout/hilite_spacing": 8 # 序号和候选字之间的间隔
   "style/layout/spacing": 10 #不知道干嘛的，在weasel下好像没有效果
   "style/layout/candidate_spacing": 24 # 候选字间隔
