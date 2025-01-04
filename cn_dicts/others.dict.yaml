@@ -8,7 +8,7 @@
 #
 ---
 name: others
-version: "2024-11-15"
+version: "2024-12-29"
 sort: by_weight
 ...
 ##### 容错词
@@ -29,7 +29,7 @@ sort: by_weight
 # 「伯伯」方言
 伯伯	bo bo
 伯伯	bai bai
-# 「斜」的古音
+# 「斜」的协音读法
 远上寒山石径斜	yuan shang han shan shi jing xie
 远上寒山石径斜	yuan shang han shan shi jing xia
 # 「骑」目前统读 qi
@@ -240,6 +240,30 @@ sort: by_weight
 粘贴	nian tie
 高句丽	gao gou li
 高句丽	gao ju li
+角斗士	jue dou shi
+角斗士	jiao dou shi
+缩砂密	su sha mi
+缩砂密	suo sha mi
+迫击炮	pai ji pao
+迫击炮	po ji pao
+柔荑	rou ti
+柔荑	rou yi
+柔荑花序	rou ti hua xu
+柔荑花序	rou yi hua xu
+手如柔荑	shou ru rou ti
+手如柔荑	shou ru rou yi
+温庭筠	wen ting yun
+温庭筠	wen ting jun
+关卡	guan qia
+关卡	guan ka	1000
+三昧真火	san mei zhen huo
+三昧真火	san wei zhen huo
+青𬞟之末	qing pin zhi mo
+青𬞟之末	qing ping zhi mo
+起于青𬞟之末	qi yu qing pin zhi mo
+起于青𬞟之末	qi yu qing ping zhi mo
+风起于青𬞟之末	feng qi yu qing pin zhi mo
+风起于青𬞟之末	feng qi yu qing ping zhi mo
 ### 错字
 曾经	ceng jing
 曾今	ceng jin
@@ -264,6 +288,8 @@ sort: by_weight
 魔蝎座	mo xie zuo
 比萨	bi sa
 披萨	pi sa
+㹴犬	geng quan
+梗犬	geng quan
 
 
 ##### 叠字
