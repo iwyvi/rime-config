@@ -50,7 +50,7 @@ engine:
   translators:
     - punct_translator
     - script_translator
-    - lua_translator@*date_translator    # 时间、日期、星期
+    # - lua_translator@*date_translator    # 时间、日期、星期
     - lua_translator@*lunar              # 农历
     - table_translator@melt_eng          # 英文输入
     - lua_translator@*unicode            # Unicode
@@ -260,3 +260,16 @@ key_binder:
   import_preset: default  # 从 default.yaml 继承通用的
   search: "`"             # 辅码引导符，要添加到 speller/alphabet
   # bindings:             # 也可以再增加方案专有的
+
+# editor 用来定制操作键的行为，以下是默认行为 https://github.com/rime/librime/blob/master/src/rime/gear/editor.cc
+editor:
+  bindings:
+    space: confirm                        # 空格键：上屏候选项
+    Return: commit_raw_input              # 回车键：上屏原始输入
+    Control+Return: commit_script_text    # Ctrl+回车键：上屏变换后输入（经过 preedit_format 转换的）
+    Control+Shift+Return: commit_comment  # Ctrl+Shift+回车键：上屏 comment
+    BackSpace: revert                     # 退格键：向前删除（撤消上次输入）
+    Delete: delete                        # Delete 键：向后删除
+    Control+BackSpace: back_syllable      # Ctrl+退格键：删除一个音节
+    Control+Delete: delete_candidate      # Ctrl+Delete键：删除或降权候选项
+    Escape: cancel                        # Esc 键：取消输入
